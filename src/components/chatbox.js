@@ -62,7 +62,11 @@ class ChatBox extends Component {
     let useCase = "getConvDetails";
 
     await axios
-      .post("http://localhost:9000/chat", { id, useCase })
+      .post(
+        "https://backend-hrt-chat.herokuapp.com/chat",
+        { id, useCase },
+        { headers: { token: this.props.headers } }
+      )
       .then(async res => {
         console.log(res.data);
 
@@ -82,7 +86,9 @@ class ChatBox extends Component {
         }
       });
 
-    let socket = await io.connect("http://localhost:9000/chatbox");
+    let socket = await io.connect(
+      "https://backend-hrt-chat.herokuapp.com/chatbox"
+    );
     this.setState({ socket });
     console.log("chatbox", this.state);
     if (this.state.socket) this.joinRoom();
@@ -152,7 +158,7 @@ class ChatBox extends Component {
               );
             })
           ) : (
-            <div />
+            <div className="alert alert-danger"> No Conversation to show</div>
           )}
         </div>
         <div style={{ position: "fixed", bottom: "2px", right: "1px" }}>

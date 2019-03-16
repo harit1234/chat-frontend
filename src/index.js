@@ -56,7 +56,7 @@ class App extends Component {
     const password = await this.state.password;
     const useCase = caseValue;
     axios
-      .post("http://localhost:9000/auth", {
+      .post("https://backend-hrt-chat.herokuapp.com/auth", {
         userName,
         password,
         useCase

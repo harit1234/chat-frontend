@@ -21,10 +21,14 @@ class UserList extends Component {
   getUserListMethod = async () => {
     let userName = this.props.userName;
     let useCase = "getUserList";
-    let res = await axios.post("http://localhost:9000/chat", {
-      userName,
-      useCase
-    });
+    let res = await axios.post(
+      "https://backend-hrt-chat.herokuapp.com/chat",
+      {
+        userName,
+        useCase
+      },
+      { headers: { token: this.props.token } }
+    );
 
     if (res.status == 200) {
       this.setState({ userList: res.data.userArray });
@@ -39,7 +43,15 @@ class UserList extends Component {
     console.log(sender, reciever);
     let useCase = "getSingleConv";
     axios
-      .post("http://localhost:9000/chat", { sender, reciever, useCase })
+      .post(
+        "https://backend-hrt-chat.herokuapp.com/chat",
+        {
+          sender,
+          reciever,
+          useCase
+        },
+        { headers: { token: this.props.headers } }
+      )
       .then(async res => {
         if (res.status == 200) {
           await this.setState({ selectedChat: res.data.id });

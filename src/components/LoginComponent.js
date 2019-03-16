@@ -1,10 +1,17 @@
 import React from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../css/bootstrap.min.css";
 
 var Login = props => {
+  const [minLength, setMinLength] = useState(4);
+  const [showlength, setShowlength] = useState(false);
+
   useEffect(() => {
     redirectCheck();
+  });
+
+  useEffect(() => {
+    if (props.userName < minLength) setShowlength(true);
   });
 
   var redirectCheck = () => {
@@ -20,6 +27,13 @@ var Login = props => {
           props.handleUsernameValue(e);
         }}
       />
+      {/* <br /> */}
+      {showlength && minLength > props.userName.length ? (
+        <span className="badge badge-danger">{`${minLength -
+          props.userName.length} more characters`}</span>
+      ) : (
+        <span className="badge badge-success">good to go !</span>
+      )}
       <br />
       password{" "}
       <input
@@ -42,6 +56,7 @@ var Login = props => {
             props.loginMethod("login");
             redirectCheck();
           }}
+          disabled={props.username.length < minlegth ? true : false}
         >
           login
         </button>
@@ -51,6 +66,7 @@ var Login = props => {
             props.loginMethod("signup");
             redirectCheck();
           }}
+          disabled={props.username.length < minlegth ? true : false}
         >
           signup
         </button>

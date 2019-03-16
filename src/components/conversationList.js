@@ -21,10 +21,14 @@ class ConversationList extends Component {
     let userName = this.props.userName;
     let useCase = "getConvList";
     //get list array and user object id
-    var res = await axios.post("http://localhost:9000/chat", {
-      userName,
-      useCase
-    });
+    var res = await axios.post(
+      "https://backend-hrt-chat.herokuapp.com/chat",
+      {
+        userName,
+        useCase
+      },
+      { headers: { token: this.props.token } }
+    );
 
     await this.setState({ conversationList: res.data.conversationList });
     // console.log("state", this.state);
